@@ -270,6 +270,7 @@ class Emulator(AVDManager):
             if self.is_started:
                 self.kill()
             
+            # delete command
             delete_cmd = f"{self.avd_manager_path}{' --silent' if silent_mode_enabled else ''} delete avd -n {self.name}"
 
             out = self._run_command(delete_cmd)
