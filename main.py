@@ -5,25 +5,31 @@ import multiprocessing
 import time
 
 
+DEBUG = False
 
 class AVDManager:
-    home = os.getenv("HOME")
-    android_home = os.path.join(home, "Android/Sdk")
+    # home = os.getenv("HOME")
+    # android_home = os.path.join(home, "Android/Sdk")
+    android_home = os.getenv("ANDROID_HOME")
 
     bin_dir = os.path.join(android_home, "tools/bin")
     # full_location = location.replace("~", home)
 
+
     if not os.path.isdir(bin_dir):
-        raise Exception(f"{bin_dir} folder does not exist")
+        raise Exception(f"{bin_dir} folder does not exist or You don't have permission to access")
 
     avd_manager_path = os.path.join(bin_dir, "avdmanager")  # vs ~/Android/Sdk/tools/bin/avdmanager
     if not os.path.isfile(avd_manager_path):
-        raise Exception(f"'avdmanager' does not exist in path {bin_dir}")
+        raise Exception(f"'avdmanager' does not exist (OR no permission) in path {bin_dir}")
     
     def __init__(self):
-        pass
+        self.current_command = ""
 
     def _run_command(self, command, wait=True):  # wait false uses multiprocessing
+        self.current_command = command
+        if DEBUG:
+            print(f"CURRENT COMMAND: {command}")
         if wait is True:
             commandline_process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE)
             if commandline_process.stderr:
