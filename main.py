@@ -11,6 +11,11 @@ class AVDManager:
     # home = os.getenv("HOME")
     # android_home = os.path.join(home, "Android/Sdk")
     android_home = os.getenv("ANDROID_HOME")
+    '''
+    # notes
+    os.environ['ANDROID_HOME'] = "/root/Android/Sdk"
+    os.environ['ANDROID_AVD_HOME'] = "/root/.android"
+    '''
 
     bin_dir = os.path.join(android_home, "tools/bin")
     # full_location = location.replace("~", home)
